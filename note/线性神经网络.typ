@@ -18,7 +18,8 @@
 
 #set align(center)
 #set text(24pt)
-Softmax 回归
+
+线性神经网络
 
 #set text(11pt)
 #set align(left)
@@ -111,5 +112,41 @@ o_2 = x_1w_21 + x_2w_22 + x_2w_23+ b_2 \
 o_3 = x_1w_31 + x_2w_32 + x_2w_33+ b_3 $ 使用三个线性的表达式表示。
 
 将其写成矩阵形式，可以表示为：
+$ mat(x_1, x_2, x_3) times mat(w_11, w_12, w_13;
+w_21, w_22, w_23;
+w_31, w_32, w_33;)^T + mat(b_1;b_2;b_3) \
+mat(mat(x_1, x_2, x_3) dot mat(w_11;w_12;w_13) + b_1;
+ mat(x_1, x_2, x_3) dot mat(w_21;w_22;w_23) + b_1;
+ mat(x_1, x_2, x_3) dot mat(w_31;w_32;w_33) + b_3;
+ ) $在这个例子中输入的个数为3，输出的个数为3，特征的个数为3，可以简写为$O = X W^T + b$。
 
-因为由上述的线性表达式得出的结果可能为正可能为负，三个输出之和也可能大于1，这样都会违背概率的定理，所以使用softmax函数来规范得到的结果。
+因为由上述的线性表达式得出的结果可能为正可能为负，三个输出之和也可能大于1，这样都会违背概率的定理，所以使用softmax函数来规范得到的结果。Softmax函数可以写为：$ hat(y) = "softmax"(o) \
+  hat(y_i) = exp(o_j) / (sum_(k)exp(o_k)) $
+这样就可以的得到$hat(y_1) = exp(o_1) / (sum_(k)exp(o_k))$，$hat(y_2) = exp(o_2) / (sum_(k)exp(o_k))$，$hat(y_3) = exp(o_3) / (sum_(k)exp(o_k))$。可以取$attach("argmax", b: i)(o_i) = attach("argmax", b:i)(hat(y_i))$作为输出值。
+
+可以得出softmax回归的计算表达式为：$ o^i = x^i w + b \ 
+  hat(y^i) = "softmax"(o_i) $
+
+== 交叉熵
+
+#indent 交叉熵可以表示为：$ H(y^(i), hat(y)^(i)) = -sum^n_(i = 1)P(x_(i))log(P(x_i)) $$𝑝(𝑥_i)$代表随机事件𝑥𝑖的概率。
+
+信息量是对信息的度量。接受到的信息量跟具体发生的事件有关。越小概率的事情发生了产生的信息量越大，越大概率的事情发生了产生的信息量越小。有2个不相关的事件x和y，那么我们观察到的俩个事件同时发生时获得的信息应该等于观察到的事件各自发生时获得的信息之和$h(x, y) = h(x) + h(y)$,由于x，y是俩个不相关的事件，那么满足 $p(x,y) = p(x) times p(y)$这样就得出信息量的公式：$ h(x) = -log_2(p(x)) $
+信息熵是在结果出来之前对可能产生的信息量的期望——考虑该随机变量的所有可能取值，即所有可能发生事件所带来的信息量的期望。就可以用前面的公式4-5表示。
+
+== 交叉熵损失函数
+
+#indent 交叉熵损失函数可以定义为：$ l(theta) = 1/n sum^n_(i = 1)H(y^i, hat(y)^i) $
+
+= 引用
+
+1. 《3.4. softmax回归 — 动手学深度学习 2.0.0 documentation》. 见于 2024年5月4日. https://zh.d2l.ai/chapter_linear-networks/softmax-regression.html.
+
+2. 《3.4. softmax回归 — 〈动手学深度学习〉 文档》. 见于 2024年5月4日. https://zh-v1.d2l.ai/chapter_deep-learning-basics/softmax-regression.html.
+
+3. 《多元线性回归模型（公式推导+举例应用）-CSDN博客》. 见于 2024年5月4日. https://blog.csdn.net/qq_46117575/article/details/135450470.
+4. 《一文详解Softmax函数 - 知乎》. 见于 2024年5月4日. https://zhuanlan.zhihu.com/p/105722023.
+
+5. 《用人话讲明白逻辑回归Logistic regression - 知乎》. 见于 2024年5月4日. https://zhuanlan.zhihu.com/p/139122386.
+
+6. 知乎专栏. 《通俗理解信息熵》. 见于 2024年5月4日. https://zhuanlan.zhihu.com/p/26486223.
