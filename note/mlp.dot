@@ -1,0 +1,63 @@
+digraph G {
+    rankdir= LR
+    subgraph cluster_input
+    {
+        label = "输入层";
+        node_x1 [label="x1", color=blue];
+        node_x2 [label="x2", color=blue];
+        node_x3 [label="x3", color=blue];
+        node_x4 [label="x4", color=blue];
+    }
+    subgraph cluster_hide
+    {
+        label = "隐蔽层";
+        node_h1 [label="h1", color=blue];
+        node_h2 [label="h2", color=blue];
+        node_h3 [label="h3", color=blue];
+        node_h4 [label="h4", color=blue];
+        node_h5 [label="h5", color=blue];
+    }
+    subgraph cluster_output
+    {
+        label = "输出层";
+        node_o1 [label="o1", color=blue];
+        node_o2 [label="o2", color=blue];
+        node_o3 [label="o3", color=blue];
+    }
+    node_x1 -> node_h1;
+    node_x1 -> node_h2;
+    node_x1 -> node_h3;
+    node_x1 -> node_h4;
+    node_x1 -> node_h5;
+    node_x2 -> node_h1;
+    node_x2 -> node_h2;
+    node_x2 -> node_h3;
+    node_x2 -> node_h4;
+    node_x2 -> node_h5;
+    node_x3 -> node_h1;
+    node_x3 -> node_h2;
+    node_x3 -> node_h3;
+    node_x3 -> node_h4;
+    node_x3 -> node_h5;
+    node_x4 -> node_h1;
+    node_x4 -> node_h2;
+    node_x4 -> node_h3;
+    node_x4 -> node_h4;
+    node_x4 -> node_h5;   
+    node_h1->node_o1;
+    node_h1->node_o2;
+    node_h1->node_o3;
+    node_h2->node_o1;
+    node_h2->node_o2;
+    node_h2->node_o3;
+    node_h3->node_o1;
+    node_h3->node_o2;
+    node_h3->node_o3;
+    node_h4->node_o1;
+    node_h4->node_o2;
+    node_h4->node_o3;
+    node_h5->node_o1;
+    node_h5->node_o2;
+    node_h5->node_o3;
+    
+}
