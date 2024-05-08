@@ -3,7 +3,15 @@
   margin: (x: 1.8cm, y: 1.5cm)
 )
 
-#set heading(numbering: "1.")
+#set heading(numbering: (..nums) => {
+if nums.pos().len()==1 {
+numbering("一、", nums.pos().at(0))
+}
+else {
+numbering("1.1", ..nums)
+}
+})
+
 #set math.equation(numbering: equation => locate(loc => {
 	let chapter = counter(heading).at(loc).at(0)
 	[(#numbering("1", chapter)  - #numbering("1", equation))]

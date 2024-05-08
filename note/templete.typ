@@ -3,18 +3,15 @@
   margin: (x: 1.8cm, y: 1.5cm)
 )
 
-#set heading(numbering: "1.1")
-#show heading: it=>{
-  if it.level == 1 {
-    set align(center)
-    counter(heading).display("一、")
-    it.body
-  } else {
-    counter(heading).display()
-    it.body
-    parbreak()
-  }
+#set heading(numbering: (..nums) => {
+if nums.pos().len()==1 {
+numbering("一、", nums.pos().at(0))
 }
+else {
+numbering("1.1", ..nums)
+}
+})
+
 #set math.equation(numbering: equation => locate(loc => {
 	let chapter = counter(heading).at(loc).at(0)
 	[(#numbering("1", chapter)  - #numbering("1", equation))]
@@ -31,7 +28,7 @@
   Title
 ])
 
-#set text(13pt)
+#set text(14pt)
 #set align(left)
 #set par(justify: true,first-line-indent: 2em)
 
@@ -39,15 +36,3 @@
     it
     par()[#text()[#h(0.0em)]]
 }
-
-
-#set text(11pt)
-#set align(left)
-= Title1
-#set par(first-line-indent: 2em)
-#let indent = h(2em)
-
-........................
-
-= Title2
-............................
