@@ -42,5 +42,5 @@ numbering("1.1", ..nums)
 #show figure: set block(breakable: true)
 
 #align(center, text(20pt)[
-  TiTle
+  Kaggle —— 房价预测
 ])
