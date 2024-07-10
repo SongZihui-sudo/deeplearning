@@ -78,7 +78,7 @@ GoogLeNet一共使用9个Inception块和全局平均汇聚层的堆叠来生成�
 
 #figure(
   image("/note/static/inception-full.svg", width: 55%),
-  caption: [inception 块],
+  caption: [GoogleNet],
   kind: image
 )\
 

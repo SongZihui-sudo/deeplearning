@@ -116,28 +116,28 @@ def try_all_gpus():  #@save
 model = Net()
 model = model.to(device=try_gpu())
 
-#定义优化器和损失函数
-optim = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9)
+# 定义优化器和损失函数
+optimizer = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9)
 criterion = torch.nn.MSELoss()
-#注意：有些模型可能需要自定义损失函数（如PTA模型）
-#PTA模型等的做法是在模型中自定义了loss_function函数，返回仅含loss这一元素的Tensor
 
-#Optional: pre-processing工作（如PTA模型，开始训练前先跑了一波标签传播算法）
 model.train()
+epochs= 10
+
+Loss_data = {
+    "train": [],
+    "dev": []
+}
+
 for epoch in range(epochs):
-	for batch_x,batch_y in train_data:
-		#有些模型不需要分批次训练，比如很多GNN模型就是一波流
-		batch_x,batch_y=batch_x.to(device=try_gpu()),batch_y.to(device=try_gpu())
-		prediction = model(batch_x)
-		loss = criterion(prediction, batch_y)
-		loss.backward()
-		optimizer.step()
-		optimizer.zero_grad()
-	#Optinal: post-processing工作（如C&S模型和PTA模型）
-	#验证	
-	#存储在验证集上表现最好的模型
-	#设置early stopping：如果验证集上的表现在超过某个阈值的次数内仍然没有变好，就可以停了
-	#关于这几个步骤的顺序：计算loss→backward→step有严格的先后顺序，zero_grad加在网络还是优化器上看需求（一般都是在优化器上），zero_grad在backward之前或者step之后都可以（一般都是step之后，也就是一个epoch运算结束之后）
+    Loss = 0
+    for batch_x, batch_y in trainloader:
+        batch_x,batch_y=batch_x.to(device=try_gpu()),batch_y.to(device=try_gpu())
+        prediction = model(batch_x)
+        loss = criterion(prediction, batch_y)
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+        Loss_data["train"].append(loss / trainloader[0])
 ```
 
 == 保存模型
@@ -158,14 +158,17 @@ model.load_state_dict(torch.load(PATH))
 
 ```Python
 model.eval()
+predicted_labels = []
 with torch.no_grad():
-    for batch_x in test_data:
-    	batch_x.to(device)
+    for batch_x in testloader:
+        batch_x.to(device = try_gpu())
         prediction = model(batch_x)
-        #在验证集上也可以计算损失函数：loss = criterion(prediction, batch_y)
-        
-        #如果需要从prediction（logits）中获取最高的一项作为预测标签：
-        predicted_label=torch.argmax(prediction,1)
+        predicted_label = torch.argmax(prediction,1)
+        predicted_labels.append(predicted_label)
+batch_x, batch_y = next(iter(testloader))
+accuracy = torch.eq(batch_y, predicted_labels).float().mean()
+
+print("准确率: %f" % (accuracy / epoch))
 ```
 
 == 可视化
