@@ -68,12 +68,6 @@ $
   (f * g)(i, j) = sum_a sum_b f(a, b)g(i -a, j -b)
 $
 
-输出的形状为：
-$
-  (n_h - k_h + 1) times (n_w - k_w + 1)
-$ 输入形状 ——— $n_h times n_w$\
-卷积核窗口 ———— $k_h times k_w$
-
 == 卷积的计算过程
 
 通常在卷积层中使用更加直观的互相关（cross-correlation）运算。在二维卷积层中，一个二维输入数组和一个二维核（kernel）数组通过互相关运算输出一个二维数组。 
@@ -81,8 +75,39 @@ $ 输入形状 ——— $n_h times n_w$\
 为了得到卷积运算的输出，我们只需将核数组左右翻转并上下翻转，再与输入数组做互相关运算。
 
 #figure(
-  image("/note/static/卷积.png", width: 85%),
+  image("/note/static/conv.gif", height: 55%),
   caption: [卷积的计算过程],
+  kind: image
+)
+
+== 感受野
+
+在卷积神经网络中，感受野是指在输入图像上，一个神经元（或特征图中的一个元素）可以看到或响应的区域大小。更具体地说，感受野是指输入图像的一个区域，这个区域中的像素会影响到卷积层或池化层中特定位置的输出值。
+感受野的计算取决于卷积层和池化层的排列方式、卷积核大小、步幅和填充方式。
+
+感受野的计算可以表示为：
+
+$
+  R_n = R_(n - 1) + (k_n - 1) dot s_(n - 1)
+$\
+· $R_n$ 是第n层的感受野大小\
+· $R_(n - 1)$ 是第n - 1层的感受野大小\
+· $k_n$ 是第n层的卷积核大小\
+· $s_(n - 1)$ 是第n - 1层的步幅大小
+
+== 输出大小
+
+$
+  cases("height"_"out" = ("height"_"in" - "height"_"kernel" + 2 times "padding") / "stride" + 1,
+  "width"_"out" = ("width"_"in" - "width"_"kernel" + 2 times "padding") / "stride" + 1
+  )
+$\
+
+全连接层的计算实例
+
+#figure(
+  image("/note/static/conv_example_linear.jpg", height: 10%),
+  caption: [全连接层的计算实例],
   kind: image
 )
 
