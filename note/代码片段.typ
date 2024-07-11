@@ -117,27 +117,28 @@ model = Net()
 model = model.to(device=try_gpu())
 
 # 定义优化器和损失函数
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-2, momentum=0.9)
-criterion = torch.nn.MSELoss()
+optimizer = torch.optim.Adam(model.parameters())
+criterion = torch.nn.CrossEntropyLoss()
 
 model.train()
-epochs= 10
+epochs= 5
 
 Loss_data = {
     "train": [],
     "dev": []
 }
 
-for epoch in range(epochs):
+for epoch in tqdm.tqdm(range(epochs)):
     Loss = 0
     for batch_x, batch_y in trainloader:
-        batch_x,batch_y=batch_x.to(device=try_gpu()),batch_y.to(device=try_gpu())
+        batch_x, batch_y = batch_x.to(device=try_gpu()), batch_y.to(device=try_gpu())
         prediction = model(batch_x)
         loss = criterion(prediction, batch_y)
         loss.backward()
         optimizer.step()
         optimizer.zero_grad()
-        Loss_data["train"].append(loss / trainloader[0])
+        Loss_data["train"].append(float(loss))
+        Loss_data["dev"].append(0)
 ```
 
 == 保存模型
@@ -238,6 +239,23 @@ def plot_pred(dv_set, model, device, lim=35., preds=None, targets=None):
     plt.ylabel('predicted value')
     plt.title('Ground Truth v.s. Prediction')
     plt.show()
+```
+
+```Python
+model.eval()
+predicted_labels = []
+epoch = 0
+accuracy_sum = 0
+with torch.no_grad():
+    for batch_x, batch_y in testloader:
+        batch_x, batch_y = batch_x.to(device = try_gpu()), batch_y.to(device = try_gpu())
+        prediction = model(batch_x)
+        predicted_label = torch.argmax(prediction,1)
+        accuracy = torch.eq(batch_y, predicted_label).float().mean()
+        accuracy_sum += accuracy
+        epoch = epoch + 1
+
+print("准确率: %f" % (accuracy / epoch))
 ```
 
 === 打印每一类的accuracy（multi-class one-label分类）
