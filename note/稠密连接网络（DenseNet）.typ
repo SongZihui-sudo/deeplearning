@@ -59,11 +59,13 @@ DenseNet（密集卷积网络）的核心思想（创新之处）是密集连接
   kind: image
 )\
 
-== DenseLayer
+#figure(
+  image("/note/static/densenet_figure.png", width: 100%),
+  caption: [ ResNet 结构 ],
+  kind: image
+)\
 
-== DenseBlock
-
-== Transition
+可见在 Densenet 中并不是简单在相邻层中存在短路连接而是在多个层之间都存在短路链接,而且不是采用简单的相加而是采用连结来处理输出。
 
 = 引用
 
