@@ -3,14 +3,17 @@ README
 .
 ├── Googlenet.ipynb
 ├── NiN.ipynb
+├── ResNet.ipynb
 ├── VGG.ipynb
 ├── dataset
+├── densenet.ipynb
 ├── house-prices-advanced-regression-techniques.ipynb
 ├── kaggle-房价预测-mlp.params
 ├── kaggle-房价预测.ipynb
 ├── note
 ├── readme.txt
 ├── softmax回归.ipynb
+├── templete.ipynb
 ├── 卷积神经网络.ipynb
 ├── 图像分类.py
 ├── 图片分类.ipynb
@@ -21,8 +24,9 @@ README
 ├── 线性回归.ipynb
 └── 逻辑回归.ipynb
 
-2 directories, 17 files
+2 directories, 20 files
 
 dataset 数据集目录
 note 笔记目录
 根目录下存放一些代码
+paper 文献
