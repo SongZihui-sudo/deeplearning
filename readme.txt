@@ -11,20 +11,24 @@ README
 ├── kaggle-房价预测-mlp.params
 ├── kaggle-房价预测.ipynb
 ├── note
+├── paper
 ├── readme.txt
+├── rnn-v1.pth
 ├── softmax回归.ipynb
-├── templete.ipynb
+├── templete_cnn.ipynb
 ├── 卷积神经网络.ipynb
 ├── 图像分类.py
 ├── 图片分类.ipynb
 ├── 多层感知机.ipynb
 ├── 对Fashion-MNIST数据集中的时尚物品进行分类.ipynb
+├── 循环神经网络.ipynb
 ├── 梯度下降.ipynb
 ├── 深度卷积神经网络.ipynb
 ├── 线性回归.ipynb
-└── 逻辑回归.ipynb
+├── 逻辑回归.ipynb
+└── 门控循环单元.ipynb
 
-2 directories, 20 files
+3 directories, 23 files
 
 dataset 数据集目录
 note 笔记目录

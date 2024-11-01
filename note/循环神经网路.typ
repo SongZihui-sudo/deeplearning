@@ -216,6 +216,10 @@ $
 
 困惑度的最好的理解是“下一个词元的实际选择数的调和平均数”。
 
+== 梯度剪裁
+
+
+
 = 引用
 
 + 《8. 循环神经网络 — 动手学深度学习 2.0.0 documentation》. 见于 2024年7月15日. https://zh.d2l.ai/chapter_recurrent-neural-networks/index.html.
